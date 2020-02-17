@@ -1,16 +1,103 @@
 import React ,{Component} from 'react';
 import Aux from '../../hoc/Auxiliary';
 import Burger from '../../components/Burger/Burger';
+import BurgerColrols from '../../components/Burger/BurgerControls/BurgerControls';
+import OrderSammary from '../../components/Burger/OrderSummary/OrderSammary';
+import Modal from '../../UI/Modal/Modal';
+
+const INGREDIENT_PRICE = {
+    'salad' : 0.2,
+    'bacon' : 0.7,
+    'cheese': 0.4,
+    'meat'  : 1.2
+}
 
 class BurgerBuilder extends Component{
 
-    render(){
+    state ={
+        ingredient :{
+            'salad' : 0,
+            'bacon' : 0,
+            'cheese': 0,
+            'meat'  : 0,
+        },
+        total : 4,
+        purchase : false,
+        purchasing : false
+    }
+
+
+    updatePurchase = (ing) =>{
+
+        let sum = Object.keys(ing).map(igkey=>{
+            return ing[igkey];
+        }).reduce((sum,el)=>{
+            return sum +el;
+        },0);
+        this.setState({purchase : sum > 0});
+    }
+
+    purchaseHandler = ()=>{
+        this.setState({purchasing : true})
+    }
+    purchaseCancelHandler = ()=>{
+        this.setState({purchasing : false})
+    }
+
+
+    addIngredientHandler = (type) =>  {
+
+        let ing_val = this.state.ingredient[type] + 1;
+
+        let new_ing = {...this.state.ingredient};
+        new_ing[type] = ing_val;
+        let price = this.state.total + INGREDIENT_PRICE[type];
+
+        this.setState({total : price,ingredient : new_ing});
+        this.updatePurchase(new_ing);
+    }
+
+
+    removeIngredientHandler = (type) =>  {
+        if(this.state.ingredient[type] <= 0){
+            return;
+        }
+
+        let ing_val = this.state.ingredient[type] - 1;
+
+        let new_ing = {...this.state.ingredient};
+        new_ing[type] = ing_val;
         
+        let price = this.state.total - INGREDIENT_PRICE[type];
+
+        this.setState({total : price,ingredient : new_ing});
+        this.updatePurchase(new_ing);
+        
+    }
+
+    render(){
+        let desableInfo = {...this.state.ingredient};
+
+        for (let key in desableInfo){
+            desableInfo[key] = desableInfo[key] <= 0;
+        }
         return(
             <Aux>
-                <Burger></Burger>
+                <Modal show={this.state.purchasing} clicked = {this.purchaseCancelHandler}>
+                <OrderSammary ingredient = {this.state.ingredient}/>
+                </Modal>
+                <Burger ingredient = {this.state.ingredient}></Burger>
+                <BurgerColrols 
+                    ingredient = {this.state.ingredient} 
+                    add = {this.addIngredientHandler}
+                    remove = {this.removeIngredientHandler}
+                    desableInfo = {desableInfo}
+                    price = {this.state.total.toFixed(2)}
+                    purchase = {this.state.purchase}
+                    purchasing = {this.purchaseHandler}
+                    
+                />               
             </Aux>
-
         );
 
     }
