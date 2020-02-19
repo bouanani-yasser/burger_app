@@ -3,7 +3,9 @@
     z-index: 500;
     background-color: white;
     width: 70%;
-    border: 1px solid #ccc;
+    border: 2px solid rgb(202, 198, 198);
+    border-radius: 10px;
+    text-align: center;
     box-shadow: 1px 1px 1px black;
     padding: 16px;
     left: 15%;
@@ -17,4 +19,8 @@
         width: 500px;
         left: calc(50% - 250px);
     }
+}
+
+.Modal ul li {
+    list-style-type: none;
 }

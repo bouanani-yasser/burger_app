@@ -19,7 +19,7 @@ const burgerControls =(props) =>{
     });
 
   return  <div className = {classes.BuildControls} >
-                <p>Current Price :<strong>{props.price}</strong> </p>
+                <p>Current Price :<strong>{props.price}$</strong> </p>
                 {controls}
                 <button 
                 onClick = {props.purchasing}

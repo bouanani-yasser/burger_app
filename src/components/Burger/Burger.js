@@ -14,7 +14,7 @@ const burger = (props)=>{
         
             return arr.concat(el);
         
-        },[]);   ;
+        },[]);   
 
         if (ingredient.length===0){
             ingredient = <p>Plese start put ingredients</p>
@@ -25,8 +25,6 @@ const burger = (props)=>{
             <BurgerIngredient type = "bread-top"/>
             {ingredient}
             <BurgerIngredient type = "bread-bottom"/>
-           
-
         </div>
 
     );

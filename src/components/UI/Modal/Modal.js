@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Modal.css';
-import Aux from '../../hoc/Auxiliary';
+import Aux from '../../../hoc/Auxiliary';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
 const model = (props) =>{
@@ -10,12 +10,12 @@ const model = (props) =>{
     <Backdrop show = {props.show} clicked = {props.clicked}/>
     <div
     style = {{
-        transform : props.show? 'translateY(0)' : 'translateY(-100vh)',
-        opacity : props.show ? '1' : '0'
+        transform : props.show? 'translateY(-10vh)' : 'translateY(-100vh)',
+        opacity : props.show? '1' : '0'
     }}
     className={classes.Modal}>
     {props.children}
-    </div>;
+    </div>
     </Aux>)
 }
 
