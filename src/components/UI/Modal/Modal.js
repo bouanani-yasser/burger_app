@@ -1,22 +1,35 @@
-import React from 'react';
+import React, {Component } from 'react';
 import classes from './Modal.css';
-import Aux from '../../../hoc/Auxiliary';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
-const model = (props) =>{
+class Model extends Component {
 
-    return(
-    <Aux>
-    <Backdrop show = {props.show} clicked = {props.clicked}/>
-    <div
-    style = {{
-        transform : props.show? 'translateY(-10vh)' : 'translateY(-100vh)',
-        opacity : props.show? '1' : '0'
-    }}
-    className={classes.Modal}>
-    {props.children}
-    </div>
-    </Aux>)
-}
+    componentDidUpdate(){
+        console.log("Model has updated")
+    }
 
-export default model;
+    //for performance
+    shouldComponentUpdate(nextProps,nextState){
+
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children
+    };
+
+    render(){
+        return(
+            <Aux>
+                <Backdrop show = {this.props.show} clicked = {this.props.clicked}/>
+                <div
+                style = {{
+                    transform : this.props.show? 'translateY(-10vh)' : 'translateY(-100vh)',
+                    opacity : this.props.show? '1' : '0'
+                }}
+                className={classes.Modal}>
+                {this.props.children}
+                </div>
+            </Aux>
+            );
+    };
+};
+
+export default Model;

@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
-import Layout from './components/Layout/Layout'
+import Layout from './hoc/Layout/Layout'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
 
 class App extends Component {
+
+  state = {
+    show : true
+  }
+
+  componentDidMount(){
+    setInterval(()=>{
+      this.setState({show : false})
+    },3000)
+  }
+
   render(){
   return (
     <Layout>
-      <BurgerBuilder></BurgerBuilder>
+      {this.state.show?<BurgerBuilder></BurgerBuilder> : null}
     </Layout>
   );
   }
